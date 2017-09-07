@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iwa-Ha-Y0L">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--MY RESERVATIONS-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="ViewController" customModule="BOfA" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="218" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QQi-W0-aud">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" red="0.87791481598984777" green="0.87791481598984777" blue="0.87791481598984777" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReservationCell" id="eBX-tM-a72" customClass="TableViewCell" customModule="BOfA" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="218"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eBX-tM-a72" id="A3m-0V-NaM">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="218"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n4P-ff-GJN">
+                                                    <rect key="frame" x="8" y="8" width="359" height="202"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iqD-bJ-Zvs">
+                                                            <rect key="frame" x="0.0" y="0.0" width="359" height="49"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Monday, March 26, 2016" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bbf-iA-qrs">
+                                                                    <rect key="frame" x="13" y="14" width="224" height="21"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <color key="textColor" red="1" green="0.99404282700000002" blue="0.99375014549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <color key="backgroundColor" red="0.070279143749999995" green="0.41083693500000001" blue="0.7577262521" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="49" id="XFB-9L-Ruh"/>
+                                                                <constraint firstItem="bbf-iA-qrs" firstAttribute="centerY" secondItem="iqD-bJ-Zvs" secondAttribute="centerY" id="Yk2-TT-HlJ"/>
+                                                                <constraint firstItem="bbf-iA-qrs" firstAttribute="leading" secondItem="iqD-bJ-Zvs" secondAttribute="leading" constant="13" id="yct-9M-uK8"/>
+                                                            </constraints>
+                                                        </view>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="1" green="0.72083405860000005" blue="0.13026095309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="iqD-bJ-Zvs" secondAttribute="trailing" id="GKo-vy-me9"/>
+                                                        <constraint firstItem="iqD-bJ-Zvs" firstAttribute="top" secondItem="n4P-ff-GJN" secondAttribute="top" id="XoU-VA-52C"/>
+                                                        <constraint firstItem="iqD-bJ-Zvs" firstAttribute="leading" secondItem="n4P-ff-GJN" secondAttribute="leading" id="yiX-nd-h6J"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="n4P-ff-GJN" firstAttribute="top" secondItem="A3m-0V-NaM" secondAttribute="topMargin" id="0Kj-jp-UTD"/>
+                                                <constraint firstItem="n4P-ff-GJN" firstAttribute="trailing" secondItem="A3m-0V-NaM" secondAttribute="trailingMargin" id="DKt-Io-Bca"/>
+                                                <constraint firstItem="n4P-ff-GJN" firstAttribute="leading" secondItem="A3m-0V-NaM" secondAttribute="leadingMargin" id="Ybu-JJ-Hh2"/>
+                                                <constraint firstItem="n4P-ff-GJN" firstAttribute="bottom" secondItem="A3m-0V-NaM" secondAttribute="bottomMargin" id="trH-4F-3ZR"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="QQi-W0-aud" secondAttribute="trailing" id="UIk-Zk-Q06"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="QQi-W0-aud" secondAttribute="bottom" id="XCB-y2-udO"/>
+                            <constraint firstItem="QQi-W0-aud" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="fdm-pG-yhf"/>
+                            <constraint firstItem="QQi-W0-aud" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="fhr-2S-HRi"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="MY RESERVATIONS" id="8AV-mv-s3q">
+                        <barButtonItem key="rightBarButtonItem" image="line" id="g1O-b9-Vuu">
+                            <color key="tintColor" red="1" green="0.99404282702524749" blue="0.99375014549110852" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="QQi-W0-aud" id="gnR-Ju-SxD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1056.8" y="122.78860569715144"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="l3f-M1-ft7">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iwa-Ha-Y0L" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="nig-zS-KZe" customClass="NavigationBar" customModule="BOfA" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.40123387008616812" green="0.61786258410534278" blue="0.95935120558375631" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.98091852498745669" green="1" blue="0.97619043470591527" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="az4-TA-QLX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0eV-2U-fRT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="117.59999999999999" y="122.78860569715144"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="line" width="40" height="40"/>
+    </resources>
+</document>
