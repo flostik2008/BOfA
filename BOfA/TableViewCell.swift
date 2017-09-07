@@ -9,12 +9,19 @@
 import UIKit
 
 class TableViewCell: UITableViewCell {
-
-    @IBOutlet weak var huyLbl: UILabel!
+    
+    @IBOutlet weak var rescheduleBtn: UIButton!
+    @IBOutlet weak var cancelBtn: UIButton!
+    @IBOutlet weak var partySizeLbl: UILabel!
+    @IBOutlet weak var timeSpanLbl: UILabel!
+    @IBOutlet weak var dateLbl: UILabel!
+    @IBOutlet weak var startTimeLbl: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
+        rescheduleBtn.layer.cornerRadius = 5
+        cancelBtn.layer.cornerRadius = 5
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
