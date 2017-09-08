@@ -22,7 +22,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     var dayAlreadyClicked = false
     var timeAlreadyClicked = false
     var calendarDatesArray = [CalendarDates]()
-    
+    var timeSpansArray = [TimeStapms]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,6 +75,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         reserveBtn.isEnabled = false
         
         createCalDateArray()
+        createTimeArr(todayChosen: false)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -92,7 +93,8 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "timeCell", for: indexPath) as! TimeCell
             cell.delegate = self
             
-            
+            let timeStamp = timeSpansArray[indexPath.row]
+            cell.configureCell(time: timeStamp.time)
             
             return cell
         }
@@ -115,8 +117,12 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             if let cell = collectionView.cellForItem(at: indexPath) {
                 cellButtonTapped(cell: cell as! CalendarCell)
             }
+            
+            if indexPath.row == 0 {
+                createTimeArr(todayChosen: true)
+            }
+            
         } else {
-                // create delegate method for time collection as well. Set image to unhidden.
             if let cell = collectionView.cellForItem(at: indexPath) {
                 timeCellTapped(cell: cell as! TimeCell)
             }
@@ -162,6 +168,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             
             reserveBtn.isEnabled = false
             reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
+            createTimeArr(todayChosen: false)
         }
     }
     
@@ -190,7 +197,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         var calendar = Calendar.current
         var today = Date() // first date
         
-        let startOfMonth = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: today)))!
+        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: calendar.startOfDay(for: today)))!
         
         var comps2 = DateComponents()
         comps2.month = 1
@@ -214,6 +221,61 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             calendarDatesArray.append(dateForArray)
             
             today = calendar.date(byAdding: .day, value: 1, to: today)!
+        }
+    }
+    
+    func createTimeArr(todayChosen: Bool) {
+        if !todayChosen {
+            
+            for i in 9...20 {
+                let calendar = Calendar.current
+                let now = Date()
+                var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
+                
+                components.hour = i
+                components.minute = 00
+                components.second = 0
+                
+                let date = calendar.date(from: components)!
+                
+                let formatter = DateFormatter()
+                formatter.dateFormat = "h:mm a"
+                
+                let timeStamp = TimeStapms(time: formatter.string(from: date))
+                timeSpansArray.append(timeStamp)
+            }
+
+        } else {
+            let calendar = Calendar.current
+            let now = Date()
+            var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
+            
+            var i = components.hour!
+            
+            if i < 9 {
+                i = 9
+            }
+            
+            for k in i...20 {
+                let caledar = Calendar.current
+                let now = Date()
+                var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
+                
+                components.hour = k
+                components.minute = 00
+                components.second = 0
+                
+                let date = calendar.date(from: components)!
+                
+                let formatter = DateFormatter()
+                formatter.dateFormat = "h:mm a"
+                
+                var timeStamp = TimeStapms(time: formatter.string(from: date))
+                timeSpansArray.append(timeStamp)
+
+            }
+            
+            timeCollection.reloadData()
         }
     }
 }

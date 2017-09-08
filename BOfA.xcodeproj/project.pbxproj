@@ -10,6 +10,7 @@
 		8712F3C91F60E6FD009C2321 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8712F3C81F60E6FD009C2321 /* NavigationBar.swift */; };
 		878AB5481F62277500106A07 /* Notes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 878AB5471F62277500106A07 /* Notes.rtf */; };
 		878AB54A1F624C9F00106A07 /* CalendarDates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878AB5491F624C9F00106A07 /* CalendarDates.swift */; };
+		878AB54D1F628F8500106A07 /* TimeStamps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878AB54C1F628F8500106A07 /* TimeStamps.swift */; };
 		87B74A941F60F43500F2E3B1 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B74A931F60F43500F2E3B1 /* TableViewCell.swift */; };
 		87B74A981F61257900F2E3B1 /* ScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B74A971F61257900F2E3B1 /* ScheduleVC.swift */; };
 		87B74A9A1F613C4000F2E3B1 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B74A991F613C4000F2E3B1 /* CalendarCell.swift */; };
@@ -25,6 +26,7 @@
 		8712F3C81F60E6FD009C2321 /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		878AB5471F62277500106A07 /* Notes.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Notes.rtf; sourceTree = "<group>"; };
 		878AB5491F624C9F00106A07 /* CalendarDates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarDates.swift; path = ../CalendarDates.swift; sourceTree = "<group>"; };
+		878AB54C1F628F8500106A07 /* TimeStamps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeStamps.swift; sourceTree = "<group>"; };
 		87B74A931F60F43500F2E3B1 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		87B74A971F61257900F2E3B1 /* ScheduleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleVC.swift; sourceTree = "<group>"; };
 		87B74A991F613C4000F2E3B1 /* CalendarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				878AB5491F624C9F00106A07 /* CalendarDates.swift */,
+				878AB54C1F628F8500106A07 /* TimeStamps.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 				8712F3C91F60E6FD009C2321 /* NavigationBar.swift in Sources */,
 				878AB54A1F624C9F00106A07 /* CalendarDates.swift in Sources */,
 				87B74A9C1F6144F400F2E3B1 /* TimeCell.swift in Sources */,
+				878AB54D1F628F8500106A07 /* TimeStamps.swift in Sources */,
 				87B74A9A1F613C4000F2E3B1 /* CalendarCell.swift in Sources */,
 				87B74A981F61257900F2E3B1 /* ScheduleVC.swift in Sources */,
 				87B74A941F60F43500F2E3B1 /* TableViewCell.swift in Sources */,

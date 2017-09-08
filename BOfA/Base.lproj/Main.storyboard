@@ -614,6 +614,7 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="checkImg" destination="nqm-5G-i90" id="wYr-uV-zob"/>
+                                            <outlet property="timeLbl" destination="KRt-FO-DOb" id="yY7-nS-Ez9"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

@@ -15,10 +15,16 @@ protocol TimeCellDelegate {
 class TimeCell: UICollectionViewCell {
     
     @IBOutlet weak var checkImg: UIImageView!
+    @IBOutlet weak var timeLbl: UILabel!
     
     var delegate: TimeCellDelegate?
     
     @IBAction func buttonTapped(sender: AnyObject) {
         delegate?.timeCellTapped(cell: self)
     }
+
+    func configureCell(time: String) {
+        timeLbl.text = time
+    }
+
 }
