@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="260" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QQi-W0-aud">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" red="0.87791481598984777" green="0.87791481598984777" blue="0.87791481598984777" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GelManicure" rowHeight="260" id="eBX-tM-a72" userLabel="GelManicure" customClass="TableViewCell" customModule="BOfA" customModuleProvider="target">
@@ -147,7 +147,6 @@
                                                     <constraints>
                                                         <constraint firstItem="cTW-uQ-Hle" firstAttribute="top" secondItem="R3I-Rk-nuL" secondAttribute="bottom" constant="7" id="0Od-ey-gpd"/>
                                                         <constraint firstItem="arm-jC-dSA" firstAttribute="leading" secondItem="n4P-ff-GJN" secondAttribute="leading" constant="13" id="502-Q2-8OC"/>
-                                                        <constraint firstItem="hpA-Zm-KVm" firstAttribute="centerY" secondItem="xSX-ao-z83" secondAttribute="centerY" constant="1" id="7P2-0M-UdF"/>
                                                         <constraint firstAttribute="trailing" secondItem="iqD-bJ-Zvs" secondAttribute="trailing" id="GKo-vy-me9"/>
                                                         <constraint firstItem="arm-jC-dSA" firstAttribute="top" secondItem="iqD-bJ-Zvs" secondAttribute="bottom" constant="8" id="IqC-hy-Pmv"/>
                                                         <constraint firstItem="8I6-z5-INM" firstAttribute="top" secondItem="cTW-uQ-Hle" secondAttribute="bottom" constant="8" id="Nb0-r4-Jqa"/>
@@ -155,8 +154,9 @@
                                                         <constraint firstAttribute="trailing" secondItem="cTW-uQ-Hle" secondAttribute="trailing" constant="12" id="U5e-vc-KRi"/>
                                                         <constraint firstItem="BP6-b6-bzW" firstAttribute="top" secondItem="8I6-z5-INM" secondAttribute="bottom" constant="9" id="VRj-kh-9C7"/>
                                                         <constraint firstAttribute="trailing" secondItem="hpA-Zm-KVm" secondAttribute="trailing" constant="12" id="VrI-LO-Fa8"/>
+                                                        <constraint firstItem="xSX-ao-z83" firstAttribute="centerY" secondItem="R3I-Rk-nuL" secondAttribute="centerY" id="Wb3-Ec-mtD"/>
                                                         <constraint firstItem="iqD-bJ-Zvs" firstAttribute="top" secondItem="n4P-ff-GJN" secondAttribute="top" id="XoU-VA-52C"/>
-                                                        <constraint firstItem="xSX-ao-z83" firstAttribute="top" secondItem="arm-jC-dSA" secondAttribute="bottom" constant="2" id="dw4-Df-URu"/>
+                                                        <constraint firstItem="hpA-Zm-KVm" firstAttribute="centerY" secondItem="xSX-ao-z83" secondAttribute="centerY" id="aLa-1o-vX7"/>
                                                         <constraint firstItem="R3I-Rk-nuL" firstAttribute="top" secondItem="arm-jC-dSA" secondAttribute="bottom" constant="-0.5" id="fvu-wT-F53"/>
                                                         <constraint firstItem="8I6-z5-INM" firstAttribute="leading" secondItem="n4P-ff-GJN" secondAttribute="leading" constant="13" id="gAZ-zc-zCj"/>
                                                         <constraint firstAttribute="trailing" secondItem="8I6-z5-INM" secondAttribute="trailing" constant="12" id="gqa-VV-Led"/>
@@ -354,7 +354,8 @@
                         <barButtonItem key="rightBarButtonItem" image="line" id="g1O-b9-Vuu">
                             <color key="tintColor" red="1" green="0.99404282702524749" blue="0.99375014549110852" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="27k-xa-3yt" kind="show" id="FoD-KU-sCx"/>
+                                <action selector="showScheduleVC:" destination="BYZ-38-t0r" id="mSY-YX-iS5"/>
+                                <segue destination="27k-xa-3yt" kind="show" identifier="createReservation" id="FoD-KU-sCx"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -626,6 +627,10 @@
                                 <state key="normal" title="RESERVE">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="reserveBtnTapped:" destination="27k-xa-3yt" eventType="touchUpInside" id="MLO-qS-nDB"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="backToMain" id="WKc-CQ-iGx"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.87333439089999998" green="0.87333439089999998" blue="0.87333439089999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -692,4 +697,7 @@
         <image name="line" width="40" height="40"/>
         <image name="timeCheckMark" width="98" height="32"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="WKc-CQ-iGx"/>
+    </inferredMetricsTieBreakers>
 </document>

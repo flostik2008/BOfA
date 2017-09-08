@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+    var reservations = [Reservation]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +31,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "Massage") as! TableViewCell
             
-            
+            var reservation = reservations[indexPath.row]
+            cell.configureCell(date: reservation.date, time: reservation.time, partySize: reservation.partySize)
             
             return cell
         }
@@ -42,7 +44,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return 1
         case 1:
             // change to return reservationsArray.count
-            return 1
+            return reservations.count
         default:
             assert(false, "section \(section)")
             return 0
@@ -51,6 +53,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
+    }
+    
+    @IBAction func showScheduleVC(_ sender: Any) {
+        
+        performSegue(withIdentifier: "createReservation", sender: reservations)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "createReservation" {
+            if let scheduleVC = segue.destination as? ScheduleVC {
+                if let reservations = sender as? [Reservation] {
+                    scheduleVC.reservations = reservations
+                }
+            }
+        }
     }
     
     

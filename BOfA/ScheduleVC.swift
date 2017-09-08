@@ -9,7 +9,6 @@
 import UIKit
 
 class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, CustomCellDelegate, TimeCellDelegate {
-
     
     @IBOutlet weak var currentMonthLbl: UILabel!
     @IBOutlet weak var callendarCollection: UICollectionView!
@@ -17,12 +16,15 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     @IBOutlet weak var partySizeTxtView: UITextField!
     @IBOutlet weak var reserveBtn: UIButton!
     
+    var reservations = [Reservation]()
     let partySizePicker = UIPickerView()
     var partySizeOptions = [String]()
     var dayAlreadyClicked = false
     var timeAlreadyClicked = false
     var calendarDatesArray = [CalendarDates]()
     var timeSpansArray = [TimeStapms]()
+    var selectedCalDay = String()
+    var selectedTime = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,6 +124,8 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                 createTimeArr(todayChosen: true)
             }
             
+            // assign
+            
         } else {
             if let cell = collectionView.cellForItem(at: indexPath) {
                 timeCellTapped(cell: cell as! TimeCell)
@@ -157,11 +161,14 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             cell.checkMarkImg.isHidden = false
             dayAlreadyClicked = true
             
-            // check if time chosen as well. yes - enable reserve button
             if timeAlreadyClicked {
                 reserveBtn.isEnabled = true
                 reserveBtn.backgroundColor = UIColor(red:0.36, green:0.69, blue:0.94, alpha:1.0)
             }
+            var date = cell.dayDateLbl.text!
+            var weekDay = cell.weekDayLbl.text!
+            selectedCalDay = date + " " + weekDay
+            
         } else if !cell.checkMarkImg.isHidden {
             cell.checkMarkImg.isHidden = true
             dayAlreadyClicked = false
@@ -169,6 +176,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             reserveBtn.isEnabled = false
             reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
             createTimeArr(todayChosen: false)
+            selectedCalDay = ""
         }
     }
     
@@ -182,6 +190,8 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                 reserveBtn.isEnabled = true
                 reserveBtn.backgroundColor = UIColor(red:0.36, green:0.69, blue:0.94, alpha:1.0)
             }
+            // grab cell's values and save it to global var.
+            selectedTime = cell.timeLbl.text!
             
         } else if !cell.checkImg.isHidden {
             cell.checkImg.isHidden = true
@@ -189,6 +199,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             
             reserveBtn.isEnabled = false
             reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
+            selectedTime = ""
         }
     }
     
@@ -272,10 +283,29 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                 
                 var timeStamp = TimeStapms(time: formatter.string(from: date))
                 timeSpansArray.append(timeStamp)
-
             }
             
             timeCollection.reloadData()
+        }
+    }
+    
+    @IBAction func reserveBtnTapped(_ sender: Any) {
+        
+        var dateString = "Friday, September 8, 2017"
+        var timeString = "10:00 AM"
+        var reservation = Reservation(date: dateString, time: timeString, partySize: partySizeTxtView.text!)
+        reservations.append(reservation)
+
+        performSegue(withIdentifier: "backToMain", sender: reservations)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "backToMain" {
+            if let mainVC = segue.destination as? ViewController {
+                if let reservations = sender as? [Reservation] {
+                    mainVC.reservations = reservations
+                }
+            }
         }
     }
 }

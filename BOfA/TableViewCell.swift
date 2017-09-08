@@ -29,5 +29,11 @@ class TableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    func configureCell(date: String, time: String, partySize: String) {
+        dateLbl.text = date
+        timeSpanLbl.text = time
+        partySizeLbl.text = partySize
+    }
 
 }
