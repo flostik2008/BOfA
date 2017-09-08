@@ -8,6 +8,17 @@
 
 import UIKit
 
+protocol CustomCellDelegate {
+    func cellButtonTapped(cell: CalendarCell)
+}
+
 class CalendarCell: UICollectionViewCell {
+    
+    @IBOutlet weak var checkMarkImg: UIImageView!
+    var delegate: CustomCellDelegate?
+    
+    @IBAction func buttonTapped(sender: AnyObject) {
+        delegate?.cellButtonTapped(cell: self)
+    }
     
 }

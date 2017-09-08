@@ -8,6 +8,17 @@
 
 import UIKit
 
+protocol TimeCellDelegate {
+    func timeCellTapped(cell: TimeCell)
+}
+
 class TimeCell: UICollectionViewCell {
     
+    @IBOutlet weak var checkImg: UIImageView!
+    
+    var delegate: TimeCellDelegate?
+    
+    @IBAction func buttonTapped(sender: AnyObject) {
+        delegate?.timeCellTapped(cell: self)
+    }
 }
