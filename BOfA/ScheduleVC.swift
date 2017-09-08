@@ -66,6 +66,8 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         
         partySizeTxtView.inputAccessoryView = toolBar
         reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
+        reserveBtn.titleLabel?.textColor = UIColor.black
+        reserveBtn.setTitleColor(UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0), for: .disabled)
         reserveBtn.isEnabled = false
     }
     
