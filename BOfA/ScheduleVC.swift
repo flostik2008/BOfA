@@ -13,6 +13,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     @IBOutlet weak var callendarCollection: UICollectionView!
     @IBOutlet weak var timeCollection: UICollectionView!
     @IBOutlet weak var partySizeTxtView: UITextField!
+    @IBOutlet weak var reserveBtn: UIButton!
     
     let partySizePicker = UIPickerView()
     var partySizeOptions = [String]()
@@ -64,6 +65,8 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         toolBar.isUserInteractionEnabled = true
         
         partySizeTxtView.inputAccessoryView = toolBar
+        reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
+        reserveBtn.isEnabled = false
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -102,7 +105,6 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                 timeCellTapped(cell: cell as! TimeCell)
             }
         }
-        
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -132,9 +134,18 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         if cell.checkMarkImg.isHidden && !dayAlreadyClicked {
             cell.checkMarkImg.isHidden = false
             dayAlreadyClicked = true
+            
+            // check if time chosen as well. yes - enable reserve button
+            if timeAlreadyClicked {
+                reserveBtn.isEnabled = true
+                reserveBtn.backgroundColor = UIColor(red:0.36, green:0.69, blue:0.94, alpha:1.0)
+            }
         } else if !cell.checkMarkImg.isHidden {
             cell.checkMarkImg.isHidden = true
             dayAlreadyClicked = false
+            
+            reserveBtn.isEnabled = false
+            reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
         }
     }
     
@@ -143,11 +154,37 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         if cell.checkImg.isHidden && !timeAlreadyClicked {
             cell.checkImg.isHidden = false
             timeAlreadyClicked = true
+            
+            if dayAlreadyClicked {
+                reserveBtn.isEnabled = true
+                reserveBtn.backgroundColor = UIColor(red:0.36, green:0.69, blue:0.94, alpha:1.0)
+            }
+            
         } else if !cell.checkImg.isHidden {
             cell.checkImg.isHidden = true
             timeAlreadyClicked = false
+            
+            reserveBtn.isEnabled = false
+            reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
         }
-        
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
