@@ -517,7 +517,7 @@
                                                         <constraint firstAttribute="height" constant="16" id="RSh-Ai-cQQ"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2qT-Ei-oVr">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2qT-Ei-oVr">
                                                     <rect key="frame" x="14" y="20" width="29" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="29" id="YwA-up-Z6d"/>
@@ -554,6 +554,8 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="checkMarkImg" destination="z3B-dQ-bb8" id="835-Q9-gz9"/>
+                                            <outlet property="dayDateLbl" destination="QrN-5s-rkS" id="OMl-fL-76w"/>
+                                            <outlet property="weekDayLbl" destination="2qT-Ei-oVr" id="Z8Q-1K-AYj"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -650,6 +652,7 @@
                     </view>
                     <connections>
                         <outlet property="callendarCollection" destination="Me0-A7-V1M" id="WSh-ma-eSh"/>
+                        <outlet property="currentMonthLbl" destination="Zdk-xM-4ah" id="Pte-kw-yBC"/>
                         <outlet property="partySizeTxtView" destination="rKH-8W-SKC" id="BS1-sv-yJ1"/>
                         <outlet property="reserveBtn" destination="Bda-5w-hvt" id="jeE-gF-tm6"/>
                         <outlet property="timeCollection" destination="yju-a9-cLa" id="z93-LI-Szy"/>

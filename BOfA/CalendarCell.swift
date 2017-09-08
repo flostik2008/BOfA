@@ -14,11 +14,19 @@ protocol CustomCellDelegate {
 
 class CalendarCell: UICollectionViewCell {
     
+    @IBOutlet weak var weekDayLbl: UILabel!
+    @IBOutlet weak var dayDateLbl: UILabel!
+    
     @IBOutlet weak var checkMarkImg: UIImageView!
     var delegate: CustomCellDelegate?
     
     @IBAction func buttonTapped(sender: AnyObject) {
         delegate?.cellButtonTapped(cell: self)
+    }
+    
+    func configureCell(weekDay: String, dayDate: String) {
+        weekDayLbl.text = weekDay
+        dayDateLbl.text = dayDate
     }
     
 }

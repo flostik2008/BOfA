@@ -10,6 +10,8 @@ import UIKit
 
 class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, CustomCellDelegate, TimeCellDelegate {
 
+    
+    @IBOutlet weak var currentMonthLbl: UILabel!
     @IBOutlet weak var callendarCollection: UICollectionView!
     @IBOutlet weak var timeCollection: UICollectionView!
     @IBOutlet weak var partySizeTxtView: UITextField!
@@ -19,6 +21,8 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     var partySizeOptions = [String]()
     var dayAlreadyClicked = false
     var timeAlreadyClicked = false
+    var calendarDatesArray = [CalendarDates]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +73,8 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         reserveBtn.titleLabel?.textColor = UIColor.black
         reserveBtn.setTitleColor(UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0), for: .disabled)
         reserveBtn.isEnabled = false
+        
+        createCalDateArray()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -76,10 +82,18 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         if collectionView == self.callendarCollection {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "callendarCell", for: indexPath) as! CalendarCell
             cell.delegate = self
+            
+            let calDate = calendarDatesArray[indexPath.row]
+            cell.configureCell(weekDay: calDate.weekDay, dayDate: calDate.date)
+            currentMonthLbl.text = calDate.month
+            
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "timeCell", for: indexPath) as! TimeCell
             cell.delegate = self
+            
+            
+            
             return cell
         }
     }
@@ -87,7 +101,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.callendarCollection {
         // return number of days in current mnth.count
-            return 9
+            return calendarDatesArray.count
         } else {
             return 12
         }
@@ -168,6 +182,38 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             
             reserveBtn.isEnabled = false
             reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
+        }
+    }
+    
+    func createCalDateArray() {
+        
+        var calendar = Calendar.current
+        var today = Date() // first date
+        
+        let startOfMonth = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: today)))!
+        
+        var comps2 = DateComponents()
+        comps2.month = 1
+        comps2.day = 0
+        let endOfMonth = calendar.date(byAdding: comps2, to: startOfMonth)
+        
+        let fmtMonth = DateFormatter()
+        fmtMonth.dateFormat = "MMMM"
+        let fmtDate = DateFormatter()
+        fmtDate.dateFormat = "d"
+        let fmtWeekday = DateFormatter()
+        fmtWeekday.dateFormat = "EEE"
+        
+        while today <= endOfMonth! {
+            
+            let mnthString = fmtMonth.string(from: today)
+            let weekdayString = fmtWeekday.string(from: today)
+            let dateDay = fmtDate.string(from: today)
+            
+            let dateForArray = CalendarDates(mnth: mnthString, date: dateDay, weekDay: weekdayString)
+            calendarDatesArray.append(dateForArray)
+            
+            today = calendar.date(byAdding: .day, value: 1, to: today)!
         }
     }
 }
