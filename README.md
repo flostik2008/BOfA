@@ -28,7 +28,5 @@ The following features **aren't** implemented, due to time constraint.
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://gph.is/2gNM7n6' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://media.giphy.com/media/xT9IgmJQlXYPrH8xnq/giphy.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-<img src='https://media.giphy.com/media/xT39D7yXPCGfNBZAuA/giphy.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-.
