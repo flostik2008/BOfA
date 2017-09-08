@@ -28,6 +28,6 @@ The following features **aren't** implemented, due to time constraint.
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://media.giphy.com/media/xT9IgmJQlXYPrH8xnq/giphy.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://gifyu.com/images/BOfA.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 https://media.giphy.com/media/xT9IgmJQlXYPrH8xnq/giphy.gif
