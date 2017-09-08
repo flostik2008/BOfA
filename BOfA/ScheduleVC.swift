@@ -17,7 +17,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     let partySizePicker = UIPickerView()
     var partySizeOptions = [String]()
     var dayAlreadyClicked = false
-    var timeAlreadyClicked = false 
+    var timeAlreadyClicked = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,7 +99,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         } else {
                 // create delegate method for time collection as well. Set image to unhidden.
             if let cell = collectionView.cellForItem(at: indexPath) {
-                
+                timeCellTapped(cell: cell as! TimeCell)
             }
         }
         

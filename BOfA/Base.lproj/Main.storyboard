@@ -594,7 +594,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeCheckMark" translatesAutoresizingMaskIntoConstraints="NO" id="nqm-5G-i90">
+                                                <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeCheckMark" translatesAutoresizingMaskIntoConstraints="NO" id="nqm-5G-i90">
                                                     <rect key="frame" x="0.0" y="0.0" width="98" height="32"/>
                                                 </imageView>
                                             </subviews>
