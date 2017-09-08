@@ -28,13 +28,7 @@ The following features **aren't** implemented, due to time constraint.
 
 Here's a walkthrough of implemented user stories:
 
-Reference-style: 
-![alt text][logo]
-
-[logo]: https://media.giphy.com/media/xT9IgmJQlXYPrH8xnq/giphy.gif "Logo Title Text 2"
-
-![alt text](https://media.giphy.com/media/xT9IgmJQlXYPrH8xnq/giphy.gif"Video Walkthrough")
-
+![alt text](https://media.giphy.com/media/xT9IgmJQlXYPrH8xnq/giphy.gif "Logo Title Text 1")
 
 <img src='https://gifyu.com/images/BOfA.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
