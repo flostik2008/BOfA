@@ -21,6 +21,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     var partySizeOptions = [String]()
     var dayAlreadyClicked = false
     var timeAlreadyClicked = false
+    var resettingAfterFirstDayClick = false
     var calendarDatesArray = [CalendarDates]()
     var timeSpansArray = [TimeStapms]()
     var selectedCalDay = String()
@@ -144,67 +145,38 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         }
     }
     
-    
-    func createTimeArr(todayChosen: Bool) {
-        if !todayChosen {
-            print("Hello")
-            for i in 9...20 {
-                let calendar = Calendar.current
-                let now = Date()
-                var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
-                
-                components.hour = i
-                components.minute = 00
-                components.second = 0
-                
-                let date = calendar.date(from: components)!
-                
-                let formatter = DateFormatter()
-                formatter.dateFormat = "h:mm a"
-                
-                let timeStamp = TimeStapms(time: formatter.string(from: date))
-                timeSpansArray.append(timeStamp)
-            }
-            print(timeSpansArray.count)
-            timeCollection.reloadData()
-
-
-        } else {
-            timeSpansArray.removeAll()
+    func createCalDateArray() {
+        
+        var calendar = Calendar.current
+        var today = Date() // first date
+        
+        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: calendar.startOfDay(for: today)))!
+        
+        var comps2 = DateComponents()
+        comps2.month = 1
+        comps2.day = 0
+        let endOfMonth = calendar.date(byAdding: comps2, to: startOfMonth)
+        
+        let fmtMonth = DateFormatter()
+        fmtMonth.dateFormat = "MMMM"
+        let fmtDate = DateFormatter()
+        fmtDate.dateFormat = "d"
+        let fmtWeekday = DateFormatter()
+        fmtWeekday.dateFormat = "EEE"
+        
+        while today <= endOfMonth! {
             
-            let calendar = Calendar.current
-            let now = Date()
-            var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
+            let mnthString = fmtMonth.string(from: today)
+            let weekdayString = fmtWeekday.string(from: today)
+            let dateDay = fmtDate.string(from: today)
             
-            var i = components.hour!
+            let dateForArray = CalendarDates(mnth: mnthString, date: dateDay, weekDay: weekdayString)
+            calendarDatesArray.append(dateForArray)
             
-            if i < 9 {
-                i = 9
-            }
-            
-            for k in i...20 {
-                let calendar = Calendar.current
-                let now = Date()
-                
-                var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
-                
-                components.hour = k
-                components.minute = 00
-                components.second = 0
-                
-                let date = calendar.date(from: components)!
-                
-                let formatter = DateFormatter()
-                formatter.dateFormat = "h:mm a"
-                
-                let timeStamp = TimeStapms(time: formatter.string(from: date))
-                timeSpansArray.append(timeStamp)
-            }
-            
-            timeCollection.reloadData()
+            today = calendar.date(byAdding: .day, value: 1, to: today)!
         }
     }
-    
+ 
     @IBAction func reserveBtnTapped(_ sender: Any) {
         
         let dateString = "Friday, September 8, 2017"
@@ -236,6 +208,8 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "timeCell", for: indexPath) as! TimeCell
             cell.delegate = self
+            
+            print(timeSpansArray.count)
             
             let timeStamp = timeSpansArray[indexPath.row]
             cell.configureCell(time: timeStamp.time)
@@ -286,46 +260,81 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             
             reserveBtn.isEnabled = false
             reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
-            createTimeArr(todayChosen: false)
             selectedCalDay = ""
             
-            // reload calendar dates array and reload collection. 
-            
+            // reload time dates array and reload collection.
+            createTimeArr(todayChosen: false)
+
         }
     }
 
-    func createCalDateArray() {
-        
-        var calendar = Calendar.current
-        var today = Date() // first date
-        
-        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: calendar.startOfDay(for: today)))!
-        
-        var comps2 = DateComponents()
-        comps2.month = 1
-        comps2.day = 0
-        let endOfMonth = calendar.date(byAdding: comps2, to: startOfMonth)
-        
-        let fmtMonth = DateFormatter()
-        fmtMonth.dateFormat = "MMMM"
-        let fmtDate = DateFormatter()
-        fmtDate.dateFormat = "d"
-        let fmtWeekday = DateFormatter()
-        fmtWeekday.dateFormat = "EEE"
-        
-        while today <= endOfMonth! {
+
+    func createTimeArr(todayChosen: Bool) {
+        if !todayChosen {
+            timeSpansArray.removeAll()
+
+            for i in 9...20 {
+                let calendar = Calendar.current
+                let now = Date()
+                var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
+                
+                components.hour = i
+                components.minute = 00
+                components.second = 0
+                
+                let date = calendar.date(from: components)!
+                
+                let formatter = DateFormatter()
+                formatter.dateFormat = "h:mm a"
+                
+                let timeStamp = TimeStapms(time: formatter.string(from: date))
+                timeSpansArray.append(timeStamp)
+            }
+            print("ready to reload data, should be 12")
+            print(timeSpansArray.count)
             
-            let mnthString = fmtMonth.string(from: today)
-            let weekdayString = fmtWeekday.string(from: today)
-            let dateDay = fmtDate.string(from: today)
+            // reloadData() is called, but 'didSelectItemAt()' is called as well, where createTimeArray(todayChosen = true) is called. We can inttoduce a flag "resettingAfterFirstDayClick = false" and when we click first day -> flag = true. When unclicking the first day -> if the flag is true, call for createTimeArray(todayChosen = true)
             
-            let dateForArray = CalendarDates(mnth: mnthString, date: dateDay, weekDay: weekdayString)
-            calendarDatesArray.append(dateForArray)
+            timeCollection.reloadData()
             
-            today = calendar.date(byAdding: .day, value: 1, to: today)!
+            
+        } else {
+            print("Goodbuy")
+            timeSpansArray.removeAll()
+            
+            let calendar = Calendar.current
+            let now = Date()
+            var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
+            
+            var i = components.hour!
+            
+            if i < 9 {
+                i = 9
+            }
+            
+            for k in i...20 {
+                let calendar = Calendar.current
+                let now = Date()
+                
+                var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
+                
+                components.hour = k
+                components.minute = 00
+                components.second = 0
+                
+                let date = calendar.date(from: components)!
+                
+                let formatter = DateFormatter()
+                formatter.dateFormat = "h:mm a"
+                
+                let timeStamp = TimeStapms(time: formatter.string(from: date))
+                timeSpansArray.append(timeStamp)
+            }
+            
+            timeCollection.reloadData()
         }
     }
-
+    
 }
 
 
