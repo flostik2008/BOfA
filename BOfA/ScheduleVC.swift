@@ -21,7 +21,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     var partySizeOptions = [String]()
     var dayAlreadyClicked = false
     var timeAlreadyClicked = false
-    var resettingAfterFirstDayClick = false
+    var todayWasSelected = false
     var calendarDatesArray = [CalendarDates]()
     var timeSpansArray = [TimeStapms]()
     var selectedCalDay = String()
@@ -220,13 +220,26 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("DidSelectItemAt delegate is called")
         if collectionView == self.callendarCollection {
             if let cell = collectionView.cellForItem(at: indexPath) {
                 cellButtonTapped(cell: cell as! CalendarCell)
             }
             
             if indexPath.row == 0 {
-                createTimeArr(todayChosen: true)
+                
+                // we just tapped the first cell. We need 2 cases: 1st - we select cell -> call "createTimeArr(true)" and create short array of times, 2nd - we select cell -> call for regular array (full one) to be set. 
+                //
+                if !todayWasSelected{
+                
+                    todayWasSelected = true
+                    createTimeArr(todayChosen: true)
+                } else {
+                    createTimeArr(todayChosen: false)
+                    todayWasSelected = false 
+                }
+                
+                
             } else {
                 createTimeArr(todayChosen: false)
             }
@@ -297,8 +310,8 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             
             timeCollection.reloadData()
             
-            
-        } else {
+          
+        }   else  {
             print("Goodbuy")
             timeSpansArray.removeAll()
             
