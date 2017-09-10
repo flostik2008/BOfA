@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="260" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QQi-W0-aud">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" red="0.87791481598984777" green="0.87791481598984777" blue="0.87791481598984777" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GelManicure" rowHeight="260" id="eBX-tM-a72" userLabel="GelManicure" customClass="TableViewCell" customModule="BOfA" customModuleProvider="target">
@@ -200,7 +200,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2:00 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gkm-yy-IxY">
-                                                                    <rect key="frame" x="255" y="14" width="96" height="21"/>
+                                                                    <rect key="frame" x="255" y="14.5" width="96" height="20.5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="96" id="eEI-BZ-56Y"/>
                                                                     </constraints>
@@ -354,7 +354,6 @@
                         <barButtonItem key="rightBarButtonItem" image="line" id="g1O-b9-Vuu">
                             <color key="tintColor" red="1" green="0.99404282702524749" blue="0.99375014549110852" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <action selector="showScheduleVC:" destination="BYZ-38-t0r" id="mSY-YX-iS5"/>
                                 <segue destination="27k-xa-3yt" kind="show" identifier="createReservation" id="FoD-KU-sCx"/>
                             </connections>
                         </barButtonItem>
@@ -629,7 +628,6 @@
                                 </state>
                                 <connections>
                                     <action selector="reserveBtnTapped:" destination="27k-xa-3yt" eventType="touchUpInside" id="MLO-qS-nDB"/>
-                                    <segue destination="BYZ-38-t0r" kind="show" identifier="backToMain" id="WKc-CQ-iGx"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -697,7 +695,4 @@
         <image name="line" width="40" height="40"/>
         <image name="timeCheckMark" width="98" height="32"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="WKc-CQ-iGx"/>
-    </inferredMetricsTieBreakers>
 </document>

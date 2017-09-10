@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8712F3C91F60E6FD009C2321 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8712F3C81F60E6FD009C2321 /* NavigationBar.swift */; };
-		878AB5481F62277500106A07 /* Notes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 878AB5471F62277500106A07 /* Notes.rtf */; };
+		871B06681F63C302006B4D33 /* BOfANotes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 871B06671F63C302006B4D33 /* BOfANotes.rtf */; };
 		878AB54A1F624C9F00106A07 /* CalendarDates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878AB5491F624C9F00106A07 /* CalendarDates.swift */; };
 		878AB54D1F628F8500106A07 /* TimeStamps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878AB54C1F628F8500106A07 /* TimeStamps.swift */; };
 		878AB54F1F62960B00106A07 /* Reservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878AB54E1F62960B00106A07 /* Reservation.swift */; };
@@ -25,7 +25,7 @@
 
 /* Begin PBXFileReference section */
 		8712F3C81F60E6FD009C2321 /* NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
-		878AB5471F62277500106A07 /* Notes.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Notes.rtf; sourceTree = "<group>"; };
+		871B06671F63C302006B4D33 /* BOfANotes.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = BOfANotes.rtf; sourceTree = "<group>"; };
 		878AB5491F624C9F00106A07 /* CalendarDates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarDates.swift; path = ../CalendarDates.swift; sourceTree = "<group>"; };
 		878AB54C1F628F8500106A07 /* TimeStamps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeStamps.swift; sourceTree = "<group>"; };
 		878AB54E1F62960B00106A07 /* Reservation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reservation.swift; sourceTree = "<group>"; };
@@ -86,7 +86,7 @@
 		87D4BB381F60D79000B86BF6 = {
 			isa = PBXGroup;
 			children = (
-				878AB5471F62277500106A07 /* Notes.rtf */,
+				871B06671F63C302006B4D33 /* BOfANotes.rtf */,
 				87D4BB431F60D79000B86BF6 /* BOfA */,
 				87D4BB421F60D79000B86BF6 /* Products */,
 			);
@@ -175,9 +175,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				878AB5481F62277500106A07 /* Notes.rtf in Resources */,
 				87D4BB4F1F60D79000B86BF6 /* LaunchScreen.storyboard in Resources */,
 				87D4BB4C1F60D79000B86BF6 /* Assets.xcassets in Resources */,
+				871B06681F63C302006B4D33 /* BOfANotes.rtf in Resources */,
 				87D4BB4A1F60D79000B86BF6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, CustomCellDelegate, TimeCellDelegate {
+class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, CustomCellDelegate, TimeCellDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var currentMonthLbl: UILabel!
     @IBOutlet weak var callendarCollection: UICollectionView!
@@ -48,7 +48,8 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         
         partySizePicker.delegate = self
         partySizePicker.dataSource = self
-        
+        navigationController?.delegate = self
+
         
         partySizeTxtView.inputView = partySizePicker
         partySizeTxtView.text = "1"
@@ -78,6 +79,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         
         createCalDateArray()
         createTimeArr(todayChosen: false)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -123,8 +125,6 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             if indexPath.row == 0 {
                 createTimeArr(todayChosen: true)
             }
-            
-            // assign
             
         } else {
             if let cell = collectionView.cellForItem(at: indexPath) {
@@ -257,6 +257,8 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             }
 
         } else {
+            print("its all good Zhennya")
+            
             let calendar = Calendar.current
             let now = Date()
             var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
@@ -267,9 +269,10 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                 i = 9
             }
             
-            for k in i...20 {
-                let caledar = Calendar.current
+            for k in 14...20 {
+                let calendar = Calendar.current
                 let now = Date()
+                
                 var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
                 
                 components.hour = k
@@ -281,8 +284,12 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                 let formatter = DateFormatter()
                 formatter.dateFormat = "h:mm a"
                 
-                var timeStamp = TimeStapms(time: formatter.string(from: date))
+                let timeStamp = TimeStapms(time: formatter.string(from: date))
                 timeSpansArray.append(timeStamp)
+            }
+
+            for i in 0..<timeSpansArray.count {
+                print(timeSpansArray[i].time)
             }
             
             timeCollection.reloadData()
@@ -291,22 +298,19 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     @IBAction func reserveBtnTapped(_ sender: Any) {
         
-        var dateString = "Friday, September 8, 2017"
-        var timeString = "10:00 AM"
-        var reservation = Reservation(date: dateString, time: timeString, partySize: partySizeTxtView.text!)
+        let dateString = "Friday, September 8, 2017"
+        let timeString = "10:00 AM"
+        let reservation = Reservation(date: dateString, time: timeString, partySize: partySizeTxtView.text!)
+        
         reservations.append(reservation)
-
-        performSegue(withIdentifier: "backToMain", sender: reservations)
+        
+        _ = navigationController?.popViewController(animated: true)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "backToMain" {
-            if let mainVC = segue.destination as? ViewController {
-                if let reservations = sender as? [Reservation] {
-                    mainVC.reservations = reservations
-                }
-            }
-        }
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        
+        (viewController as? ViewController)?.reservations = reservations
+        
     }
 }
 

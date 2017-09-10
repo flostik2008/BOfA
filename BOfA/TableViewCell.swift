@@ -32,7 +32,7 @@ class TableViewCell: UITableViewCell {
     
     func configureCell(date: String, time: String, partySize: String) {
         dateLbl.text = date
-        timeSpanLbl.text = time
+        startTimeLbl.text = time
         partySizeLbl.text = partySize
     }
 

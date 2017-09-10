@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     var reservations = [Reservation]()
@@ -21,6 +21,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
+        
+        for i in 0..<reservations.count {
+            var huy = reservations[i]
+            print(huy.date)
+        }
+
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -43,7 +54,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         case 0:
             return 1
         case 1:
-            // change to return reservationsArray.count
             return reservations.count
         default:
             assert(false, "section \(section)")
@@ -55,20 +65,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return 2
     }
     
-    @IBAction func showScheduleVC(_ sender: Any) {
-        
-        performSegue(withIdentifier: "createReservation", sender: reservations)
-    }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "createReservation" {
-            if let scheduleVC = segue.destination as? ScheduleVC {
-                if let reservations = sender as? [Reservation] {
+                if let scheduleVC = segue.destination as? ScheduleVC {
                     scheduleVC.reservations = reservations
                 }
-            }
-        }
+         }
     }
-    
     
 }
 
