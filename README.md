@@ -18,10 +18,11 @@ The following **required** functionality is complete:
 * [x] Once day and time is picked a view with a checkmark is shown. 
 * [x] When party size field is tapped, picker view is shown. Being updated. 
 * [x] After 'reserve' button is tapped, user is taken to the main View Controller. 
+* [x] 'Reserve' button creates a new instance of 'reservation' class that appears on the main screen.  
+
 
 The following features **aren't** implemented, due to time constraint. 
 * [x] Time and date of reservation isn't saved properly. (Manualy generate it)
-* [x] Bug: no more than 1 reservation can be created. 
 * [x] Bonus features. 
 
 ## Video Walkthrough 
