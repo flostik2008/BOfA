@@ -82,56 +82,19 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-       
-        if collectionView == self.callendarCollection {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "callendarCell", for: indexPath) as! CalendarCell
-            cell.delegate = self
-            
-            let calDate = calendarDatesArray[indexPath.row]
-            cell.configureCell(weekDay: calDate.weekDay, dayDate: calDate.date)
-            currentMonthLbl.text = calDate.month
-            
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "timeCell", for: indexPath) as! TimeCell
-            cell.delegate = self
-            
-            let timeStamp = timeSpansArray[indexPath.row]
-            cell.configureCell(time: timeStamp.time)
-            
-            return cell
-        }
-    }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.callendarCollection {
         // return number of days in current mnth.count
             return calendarDatesArray.count
         } else {
-            return 12
+            return timeSpansArray.count
         }
     }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == self.callendarCollection {
-            if let cell = collectionView.cellForItem(at: indexPath) {
-                cellButtonTapped(cell: cell as! CalendarCell)
-            }
-            
-            if indexPath.row == 0 {
-                createTimeArr(todayChosen: true)
-            }
-            
-        } else {
-            if let cell = collectionView.cellForItem(at: indexPath) {
-                timeCellTapped(cell: cell as! TimeCell)
-            }
-        }
-    }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return partySizeOptions[row]
@@ -155,30 +118,6 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         partySizeTxtView.resignFirstResponder()
     }
     
-    func cellButtonTapped(cell: CalendarCell) {
-        
-        if cell.checkMarkImg.isHidden && !dayAlreadyClicked {
-            cell.checkMarkImg.isHidden = false
-            dayAlreadyClicked = true
-            
-            if timeAlreadyClicked {
-                reserveBtn.isEnabled = true
-                reserveBtn.backgroundColor = UIColor(red:0.36, green:0.69, blue:0.94, alpha:1.0)
-            }
-            var date = cell.dayDateLbl.text!
-            var weekDay = cell.weekDayLbl.text!
-            selectedCalDay = date + " " + weekDay
-            
-        } else if !cell.checkMarkImg.isHidden {
-            cell.checkMarkImg.isHidden = true
-            dayAlreadyClicked = false
-            
-            reserveBtn.isEnabled = false
-            reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
-            createTimeArr(todayChosen: false)
-            selectedCalDay = ""
-        }
-    }
     
     func timeCellTapped(cell: TimeCell) {
         
@@ -197,12 +136,164 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             cell.checkImg.isHidden = true
             timeAlreadyClicked = false
             
+            createTimeArr(todayChosen: false)
+            
             reserveBtn.isEnabled = false
             reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
             selectedTime = ""
         }
     }
     
+    
+    func createTimeArr(todayChosen: Bool) {
+        if !todayChosen {
+            print("Hello")
+            for i in 9...20 {
+                let calendar = Calendar.current
+                let now = Date()
+                var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
+                
+                components.hour = i
+                components.minute = 00
+                components.second = 0
+                
+                let date = calendar.date(from: components)!
+                
+                let formatter = DateFormatter()
+                formatter.dateFormat = "h:mm a"
+                
+                let timeStamp = TimeStapms(time: formatter.string(from: date))
+                timeSpansArray.append(timeStamp)
+            }
+            print(timeSpansArray.count)
+            timeCollection.reloadData()
+
+
+        } else {
+            timeSpansArray.removeAll()
+            
+            let calendar = Calendar.current
+            let now = Date()
+            var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
+            
+            var i = components.hour!
+            
+            if i < 9 {
+                i = 9
+            }
+            
+            for k in i...20 {
+                let calendar = Calendar.current
+                let now = Date()
+                
+                var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
+                
+                components.hour = k
+                components.minute = 00
+                components.second = 0
+                
+                let date = calendar.date(from: components)!
+                
+                let formatter = DateFormatter()
+                formatter.dateFormat = "h:mm a"
+                
+                let timeStamp = TimeStapms(time: formatter.string(from: date))
+                timeSpansArray.append(timeStamp)
+            }
+            
+            timeCollection.reloadData()
+        }
+    }
+    
+    @IBAction func reserveBtnTapped(_ sender: Any) {
+        
+        let dateString = "Friday, September 8, 2017"
+        let timeString = "10:00 AM"
+        let reservation = Reservation(date: dateString, time: timeString, partySize: partySizeTxtView.text!)
+        
+        reservations.append(reservation)
+        
+        _ = navigationController?.popViewController(animated: true)
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        
+        (viewController as? ViewController)?.reservations = reservations
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        if collectionView == self.callendarCollection {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "callendarCell", for: indexPath) as! CalendarCell
+            cell.delegate = self
+            
+            let calDate = calendarDatesArray[indexPath.row]
+            cell.configureCell(weekDay: calDate.weekDay, dayDate: calDate.date)
+            currentMonthLbl.text = calDate.month
+            
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "timeCell", for: indexPath) as! TimeCell
+            cell.delegate = self
+            
+            let timeStamp = timeSpansArray[indexPath.row]
+            cell.configureCell(time: timeStamp.time)
+            
+            return cell
+        }
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == self.callendarCollection {
+            if let cell = collectionView.cellForItem(at: indexPath) {
+                cellButtonTapped(cell: cell as! CalendarCell)
+            }
+            
+            if indexPath.row == 0 {
+                createTimeArr(todayChosen: true)
+            } else {
+                createTimeArr(todayChosen: false)
+            }
+            
+        } else {
+            if let cell = collectionView.cellForItem(at: indexPath) {
+                timeCellTapped(cell: cell as! TimeCell)
+            }
+        }
+    }
+
+    func cellButtonTapped(cell: CalendarCell) {
+        
+        if cell.checkMarkImg.isHidden && !dayAlreadyClicked {
+            cell.checkMarkImg.isHidden = false
+            dayAlreadyClicked = true
+            
+            if timeAlreadyClicked {
+                reserveBtn.isEnabled = true
+                reserveBtn.backgroundColor = UIColor(red:0.36, green:0.69, blue:0.94, alpha:1.0)
+            }
+            
+            // these 3 calls are for saving date for the main VC.
+            var date = cell.dayDateLbl.text!
+            var weekDay = cell.weekDayLbl.text!
+            selectedCalDay = date + " " + weekDay
+            
+        } else if !cell.checkMarkImg.isHidden {
+            cell.checkMarkImg.isHidden = true
+            dayAlreadyClicked = false
+            
+            reserveBtn.isEnabled = false
+            reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
+            createTimeArr(todayChosen: false)
+            selectedCalDay = ""
+            
+            // reload calendar dates array and reload collection. 
+            
+        }
+    }
+
     func createCalDateArray() {
         
         var calendar = Calendar.current
@@ -234,84 +325,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             today = calendar.date(byAdding: .day, value: 1, to: today)!
         }
     }
-    
-    func createTimeArr(todayChosen: Bool) {
-        if !todayChosen {
-            
-            for i in 9...20 {
-                let calendar = Calendar.current
-                let now = Date()
-                var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
-                
-                components.hour = i
-                components.minute = 00
-                components.second = 0
-                
-                let date = calendar.date(from: components)!
-                
-                let formatter = DateFormatter()
-                formatter.dateFormat = "h:mm a"
-                
-                let timeStamp = TimeStapms(time: formatter.string(from: date))
-                timeSpansArray.append(timeStamp)
-            }
 
-        } else {
-            print("its all good Zhennya")
-            
-            let calendar = Calendar.current
-            let now = Date()
-            var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
-            
-            var i = components.hour!
-            
-            if i < 9 {
-                i = 9
-            }
-            
-            for k in 14...20 {
-                let calendar = Calendar.current
-                let now = Date()
-                
-                var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
-                
-                components.hour = k
-                components.minute = 00
-                components.second = 0
-                
-                let date = calendar.date(from: components)!
-                
-                let formatter = DateFormatter()
-                formatter.dateFormat = "h:mm a"
-                
-                let timeStamp = TimeStapms(time: formatter.string(from: date))
-                timeSpansArray.append(timeStamp)
-            }
-
-            for i in 0..<timeSpansArray.count {
-                print(timeSpansArray[i].time)
-            }
-            
-            timeCollection.reloadData()
-        }
-    }
-    
-    @IBAction func reserveBtnTapped(_ sender: Any) {
-        
-        let dateString = "Friday, September 8, 2017"
-        let timeString = "10:00 AM"
-        let reservation = Reservation(date: dateString, time: timeString, partySize: partySizeTxtView.text!)
-        
-        reservations.append(reservation)
-        
-        _ = navigationController?.popViewController(animated: true)
-    }
-    
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        
-        (viewController as? ViewController)?.reservations = reservations
-        
-    }
 }
 
 
