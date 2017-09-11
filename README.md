@@ -1,6 +1,6 @@
 # BOfA
 
-**MassageSchedular** iOS application to make reservations. 
+**MassageScheduler** iOS application to make reservations. 
 
 Submitted by: **Evgeny Vlasov**
 
