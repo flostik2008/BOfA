@@ -30,4 +30,4 @@ Here's a walkthrough of implemented user stories:
 
 https://media.giphy.com/media/xT9IgInYZbS19CL6Zq/giphy.gif
 
-![](http://www.reactiongifs.us/wp-content/uploads/2013/10/nuh_uh_conan_obrien.gif)
+![](https://media.giphy.com/media/xT9IgInYZbS19CL6Zq/giphy.gif)
