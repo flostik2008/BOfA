@@ -26,8 +26,8 @@ The following functionality is implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://media.giphy.com/media/xT9IgInYZbS19CL6Zq/giphy.gif' title='Video Walkthrough' width='' alt='Video Walkthrough'/>
+<img src='https://i.imgur.com/gqQni8M.gif' title='Video Walkthrough' width='' alt='Video Walkthrough'/>
 
 https://media.giphy.com/media/xT9IgInYZbS19CL6Zq/giphy.gif
 
-![](https://media.giphy.com/media/xT9IgInYZbS19CL6Zq/giphy.gif)
+![](https://i.imgur.com/gqQni8M.gif)
