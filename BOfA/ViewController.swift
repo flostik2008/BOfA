@@ -22,11 +22,39 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.delegate = self
         tableView.dataSource = self
         
+        NotificationCenter.default.addObserver(self, selector: #selector(closeApp), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        
+        let defaults = UserDefaults.standard
+        
+        if let decoded = defaults.object(forKey: "reservations") as? Data {
+            let decodedReservations = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Reservation]
+            reservations = decodedReservations
+        }
+
+    }
+    
+    func openApp(){
+        print("viewWillAppear is called")
+        let defaults = UserDefaults.standard
+        
+        if let decoded = defaults.object(forKey: "reservations") as? Data {
+            let decodedReservations = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Reservation]
+            reservations = decodedReservations
+        }
+    }
+    
+    func closeApp() {
+        
+        print("viewWillDisappear is called")
+        
+        let defaults = UserDefaults.standard
+        let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: reservations)
+        
+        defaults.set(encodedData, forKey: "reservations")
     }
     
     override func viewDidAppear(_ animated: Bool) {
         tableView.reloadData()
-
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -82,5 +110,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         return finalDate
     }
+
 }
 
