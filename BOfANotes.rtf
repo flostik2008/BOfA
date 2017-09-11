@@ -53,6 +53,14 @@ Now, in cellButtonTapped( ) we call timeCollection.reloadData( ). And in cellFor
 \f1\fs30 \cf3 \kerning1\expnd0\expndtw0 \CocoaLigature0 cell.\cf4 checkImg\cf3 .\cf5 isHidden\cf3  = \cf6 true. 
 \f0\fs36 \cf0 \expnd0\expndtw0\kerning0
 \CocoaLigature1 We also need to set the flag "timeChosen" to false.  \
+Still some bugs, but works. \
+\
+5. \
+How to grab chosen cells date and time, save it into Reservations array. So then in ViewController I could retrieve that info and display it in the tableView. \
+When in cellButtonTapped and in timeCellTapped we enable the 'reserve' button, we can save chosen data. And when user presses 'reserve' button, write it into 'reservations' array. \
+But it would be smth like "Tue 12 1:00PM" (we can grab name of the month -> "September 12 1:00PM")\
+\
+\
 \
 \
 \

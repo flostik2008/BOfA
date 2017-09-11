@@ -24,7 +24,9 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     var todayWasSelected = false
     var calendarDatesArray = [CalendarDates]()
     var timeSpansArray = [TimeStapms]()
-    var selectedCalDay = String()
+//    var selectedCalDay = String()
+//    var selectedTime = String()
+    var selectedDate = String()
     var selectedTime = String()
     var selectedCells = [Int:Bool]()
     
@@ -155,9 +157,13 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
  
     @IBAction func reserveBtnTapped(_ sender: Any) {
         
-        let dateString = "Friday, September 8, 2017"
-        let timeString = "10:00 AM"
-        let reservation = Reservation(date: dateString, time: timeString, partySize: partySizeTxtView.text!)
+//        let dateString = "Friday, September 8, 2017"
+//        let timeString = "10:00 AM"
+//        let reservation = Reservation(date: dateString, time: timeString, partySize: partySizeTxtView.text!)
+//        
+        print("Saving selectedDate = \(selectedDate) and selectedTime = \(selectedTime)")
+        
+        let reservation = Reservation(date: selectedDate, time: selectedTime, partySize: partySizeTxtView.text!)
         
         reservations.append(reservation)
         
@@ -244,10 +250,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             
             selectedCells[indexPathRow] = true
             
-            // these 3 calls are for saving date for the main VC.
-            let date = cell.dayDateLbl.text!
-            let weekDay = cell.weekDayLbl.text!
-            selectedCalDay = date + " " + weekDay
+            selectedDate = cell.weekDayLbl.text! + " " + currentMonthLbl.text! + " " + cell.dayDateLbl.text!
             
         } else if !cell.checkMarkImg.isHidden {
             cell.checkMarkImg.isHidden = true
@@ -255,18 +258,16 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             
             reserveBtn.isEnabled = false
             reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
-            selectedCalDay = ""
             
-            // reload time dates array and reload collection.
             createTimeArr(todayChosen: false)
            
             selectedCells.removeValue(forKey: indexPathRow)
             
-            // remove check mark from timeCollection.
-           
             timeAlreadyClicked = false
             dayAlreadyClicked = false
 
+            selectedDate = ""
+            
             timeCollection.reloadData()
         }
     }
@@ -278,10 +279,11 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             timeAlreadyClicked = true
             
             if dayAlreadyClicked {
+                // here we activate the 'reserve' button. Here we need to save to 'reservation' array.
+
                 reserveBtn.isEnabled = true
                 reserveBtn.backgroundColor = UIColor(red:0.36, green:0.69, blue:0.94, alpha:1.0)
             }
-            // grab cell's values and save it to global var.
             selectedTime = cell.timeLbl.text!
             
         } else if !cell.checkImg.isHidden {
@@ -292,6 +294,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             
             reserveBtn.isEnabled = false
             reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
+            
             selectedTime = ""
         }
     }

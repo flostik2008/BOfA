@@ -43,7 +43,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let cell = tableView.dequeueReusableCell(withIdentifier: "Massage") as! TableViewCell
             
             var reservation = reservations[indexPath.row]
-            cell.configureCell(date: reservation.date, time: reservation.time, partySize: reservation.partySize)
+            
+            var formattedDate = formatTheDate(reservation.date)
+            
+            cell.configureCell(date: formattedDate, time: reservation.time, partySize: reservation.partySize)
             
             return cell
         }
@@ -73,5 +76,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
          }
     }
     
+    func formatTheDate(_ date: String) -> String {
+    
+        // Takes string, converts to Date, formatts to the right date, returns String. 
+        // our current format is "Mon September 11" -> "Monday, September 11, 2016" 
+        // current: "E MMMM d" -> "EEEE, MMMM d, " 2017. 
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E MMMM d"
+        let date1 = dateFormatter.date(from: date)
+        
+        dateFormatter.dateFormat = "EEEE, MMMM d"
+        let finalDate = dateFormatter.string(from: date1!) + ", 2017"
+        
+        return finalDate
+    }
 }
 
