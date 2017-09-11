@@ -28,6 +28,4 @@ Here's a walkthrough of implemented user stories:
 
 <img src='https://media.giphy.com/media/3ohhwE9dWqHLIPFlBe/giphy.gif' title='Video Walkthrough' width='' alt='Video Walkthrough'/>
 
-https://media.giphy.com/media/3ohhwE9dWqHLIPFlBe/giphy.gif
 
-![](https://media.giphy.com/media/3ohhwE9dWqHLIPFlBe/giphy.gif)
