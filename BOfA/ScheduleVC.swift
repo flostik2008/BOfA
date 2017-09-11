@@ -26,6 +26,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     var timeSpansArray = [TimeStapms]()
     var selectedCalDay = String()
     var selectedTime = String()
+    var selectedCells = [Int:Bool]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -147,7 +148,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     func createCalDateArray() {
         
-        var calendar = Calendar.current
+        let calendar = Calendar.current
         var today = Date() // first date
         
         let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: calendar.startOfDay(for: today)))!
@@ -197,19 +198,27 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if collectionView == self.callendarCollection {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "callendarCell", for: indexPath) as! CalendarCell
-            cell.delegate = self
             
+        // if this indexPath exists in the dict -> return UICollectionViewCell() as! CalendarCell. else, dequeue it. 
+            
+            var cell = collectionView.dequeueReusableCell(withReuseIdentifier: "callendarCell", for:
+                indexPath) as! CalendarCell
+            cell.delegate = self
             let calDate = calendarDatesArray[indexPath.row]
             cell.configureCell(weekDay: calDate.weekDay, dayDate: calDate.date)
             currentMonthLbl.text = calDate.month
             
+            if selectedCells[indexPath.row] == true {
+                    cell.checkMarkImg.isHidden = false
+            } else {
+                cell.checkMarkImg.isHidden = true
+            }
+            
             return cell
+            
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "timeCell", for: indexPath) as! TimeCell
             cell.delegate = self
-            
-            print(timeSpansArray.count)
             
             let timeStamp = timeSpansArray[indexPath.row]
             cell.configureCell(time: timeStamp.time)
@@ -220,29 +229,27 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("DidSelectItemAt delegate is called")
+        print("__________didSelectItemAt is tapped")
         if collectionView == self.callendarCollection {
             if let cell = collectionView.cellForItem(at: indexPath) {
-                cellButtonTapped(cell: cell as! CalendarCell)
+                cellButtonTapped(cell: cell as! CalendarCell, indexPathRow: indexPath.row)
             }
             
             if indexPath.row == 0 {
-                
-                // we just tapped the first cell. We need 2 cases: 1st - we select cell -> call "createTimeArr(true)" and create short array of times, 2nd - we select cell -> call for regular array (full one) to be set. 
-                //
                 if !todayWasSelected{
-                
                     todayWasSelected = true
                     createTimeArr(todayChosen: true)
                 } else {
                     createTimeArr(todayChosen: false)
-                    todayWasSelected = false 
+                    todayWasSelected = false
                 }
-                
-                
             } else {
                 createTimeArr(todayChosen: false)
             }
+            
+            // we selected a cell, adding it to a dictionary. When we will click again, we should remove this from dictionary. 
+            print("setting \(indexPath.row) cell to = true in the dictionary.")
+           // selectedCells[indexPath.row] = true
             
         } else {
             if let cell = collectionView.cellForItem(at: indexPath) {
@@ -251,8 +258,12 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         }
     }
 
-    func cellButtonTapped(cell: CalendarCell) {
-        
+    // Bug: when tapping 1st cell, another, 11 days ahead cell is tapped. Tapping that 11th cell - diselects the first cell. 12 - 24 (12d) 11 - 22(11d) 22-10 21 -10 22-10
+    // 14-26 26-15 15-27....
+    
+    func cellButtonTapped(cell: CalendarCell, indexPathRow: Int) {
+        print("__________cellButtonTapped is called")
+
         if cell.checkMarkImg.isHidden && !dayAlreadyClicked {
             cell.checkMarkImg.isHidden = false
             dayAlreadyClicked = true
@@ -262,9 +273,13 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                 reserveBtn.backgroundColor = UIColor(red:0.36, green:0.69, blue:0.94, alpha:1.0)
             }
             
+            // adding this cell to the dictionary
+            selectedCells[indexPathRow] = true
+
+            
             // these 3 calls are for saving date for the main VC.
-            var date = cell.dayDateLbl.text!
-            var weekDay = cell.weekDayLbl.text!
+            let date = cell.dayDateLbl.text!
+            let weekDay = cell.weekDayLbl.text!
             selectedCalDay = date + " " + weekDay
             
         } else if !cell.checkMarkImg.isHidden {
@@ -277,7 +292,10 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             
             // reload time dates array and reload collection.
             createTimeArr(todayChosen: false)
-
+           
+            print("Ready to remove value from dictionary \(selectedCells[indexPathRow])")
+            selectedCells.removeValue(forKey: indexPathRow)
+            print("Now, shouldn't be anything here: \(selectedCells[indexPathRow])")
         }
     }
 
@@ -303,16 +321,10 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                 let timeStamp = TimeStapms(time: formatter.string(from: date))
                 timeSpansArray.append(timeStamp)
             }
-            print("ready to reload data, should be 12")
-            print(timeSpansArray.count)
-            
-            // reloadData() is called, but 'didSelectItemAt()' is called as well, where createTimeArray(todayChosen = true) is called. We can inttoduce a flag "resettingAfterFirstDayClick = false" and when we click first day -> flag = true. When unclicking the first day -> if the flag is true, call for createTimeArray(todayChosen = true)
             
             timeCollection.reloadData()
             
-          
         }   else  {
-            print("Goodbuy")
             timeSpansArray.removeAll()
             
             let calendar = Calendar.current

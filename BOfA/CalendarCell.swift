@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CustomCellDelegate {
-    func cellButtonTapped(cell: CalendarCell)
+    func cellButtonTapped(cell: CalendarCell, indexPathRow: Int)
 }
 
 class CalendarCell: UICollectionViewCell {
@@ -20,9 +20,9 @@ class CalendarCell: UICollectionViewCell {
     @IBOutlet weak var checkMarkImg: UIImageView!
     var delegate: CustomCellDelegate?
     
-    @IBAction func buttonTapped(sender: AnyObject) {
-        delegate?.cellButtonTapped(cell: self)
-    }
+//    @IBAction func buttonTapped(sender: AnyObject) {
+//        delegate?.cellButtonTapped(cell: self)
+//    }
     
     func configureCell(weekDay: String, dayDate: String) {
         weekDayLbl.text = weekDay
