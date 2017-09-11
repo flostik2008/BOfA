@@ -121,32 +121,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     }
     
     
-    func timeCellTapped(cell: TimeCell) {
-        
-        if cell.checkImg.isHidden && !timeAlreadyClicked {
-            cell.checkImg.isHidden = false
-            timeAlreadyClicked = true
-            
-            if dayAlreadyClicked {
-                reserveBtn.isEnabled = true
-                reserveBtn.backgroundColor = UIColor(red:0.36, green:0.69, blue:0.94, alpha:1.0)
-            }
-            // grab cell's values and save it to global var.
-            selectedTime = cell.timeLbl.text!
-            
-        } else if !cell.checkImg.isHidden {
-            cell.checkImg.isHidden = true
-            timeAlreadyClicked = false
-            
-            createTimeArr(todayChosen: false)
-            
-            reserveBtn.isEnabled = false
-            reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
-            selectedTime = ""
-        }
-    }
-    
-    func createCalDateArray() {
+      func createCalDateArray() {
         
         let calendar = Calendar.current
         var today = Date() // first date
@@ -217,11 +192,13 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             return cell
             
         } else {
+        
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "timeCell", for: indexPath) as! TimeCell
             cell.delegate = self
             
             let timeStamp = timeSpansArray[indexPath.row]
             cell.configureCell(time: timeStamp.time)
+            cell.checkImg.isHidden = true
             
             return cell
         }
@@ -229,7 +206,6 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("__________didSelectItemAt is tapped")
         if collectionView == self.callendarCollection {
             if let cell = collectionView.cellForItem(at: indexPath) {
                 cellButtonTapped(cell: cell as! CalendarCell, indexPathRow: indexPath.row)
@@ -247,10 +223,6 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                 createTimeArr(todayChosen: false)
             }
             
-            // we selected a cell, adding it to a dictionary. When we will click again, we should remove this from dictionary. 
-            print("setting \(indexPath.row) cell to = true in the dictionary.")
-           // selectedCells[indexPath.row] = true
-            
         } else {
             if let cell = collectionView.cellForItem(at: indexPath) {
                 timeCellTapped(cell: cell as! TimeCell)
@@ -258,11 +230,8 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         }
     }
 
-    // Bug: when tapping 1st cell, another, 11 days ahead cell is tapped. Tapping that 11th cell - diselects the first cell. 12 - 24 (12d) 11 - 22(11d) 22-10 21 -10 22-10
-    // 14-26 26-15 15-27....
-    
+
     func cellButtonTapped(cell: CalendarCell, indexPathRow: Int) {
-        print("__________cellButtonTapped is called")
 
         if cell.checkMarkImg.isHidden && !dayAlreadyClicked {
             cell.checkMarkImg.isHidden = false
@@ -273,9 +242,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                 reserveBtn.backgroundColor = UIColor(red:0.36, green:0.69, blue:0.94, alpha:1.0)
             }
             
-            // adding this cell to the dictionary
             selectedCells[indexPathRow] = true
-
             
             // these 3 calls are for saving date for the main VC.
             let date = cell.dayDateLbl.text!
@@ -293,12 +260,41 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             // reload time dates array and reload collection.
             createTimeArr(todayChosen: false)
            
-            print("Ready to remove value from dictionary \(selectedCells[indexPathRow])")
             selectedCells.removeValue(forKey: indexPathRow)
-            print("Now, shouldn't be anything here: \(selectedCells[indexPathRow])")
+            
+            // remove check mark from timeCollection.
+           
+            timeAlreadyClicked = false
+            dayAlreadyClicked = false
+
+            timeCollection.reloadData()
         }
     }
 
+    func timeCellTapped(cell: TimeCell) {
+        
+        if cell.checkImg.isHidden && !timeAlreadyClicked {
+            cell.checkImg.isHidden = false
+            timeAlreadyClicked = true
+            
+            if dayAlreadyClicked {
+                reserveBtn.isEnabled = true
+                reserveBtn.backgroundColor = UIColor(red:0.36, green:0.69, blue:0.94, alpha:1.0)
+            }
+            // grab cell's values and save it to global var.
+            selectedTime = cell.timeLbl.text!
+            
+        } else if !cell.checkImg.isHidden {
+            cell.checkImg.isHidden = true
+            timeAlreadyClicked = false
+            
+            createTimeArr(todayChosen: false)
+            
+            reserveBtn.isEnabled = false
+            reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
+            selectedTime = ""
+        }
+    }
 
     func createTimeArr(todayChosen: Bool) {
         if !todayChosen {
@@ -334,6 +330,8 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             var i = components.hour!
             
             if i < 9 {
+                i = 9
+            } else if i > 20 {
                 i = 9
             }
             
