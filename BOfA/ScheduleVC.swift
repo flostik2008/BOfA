@@ -24,8 +24,6 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     var todayWasSelected = false
     var calendarDatesArray = [CalendarDates]()
     var timeSpansArray = [TimeStapms]()
-//    var selectedCalDay = String()
-//    var selectedTime = String()
     var selectedDate = String()
     var selectedTime = String()
     var selectedCells = [Int:Bool]()
@@ -54,7 +52,6 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         partySizePicker.dataSource = self
         navigationController?.delegate = self
 
-        
         partySizeTxtView.inputView = partySizePicker
         partySizeTxtView.text = "1"
         
@@ -78,12 +75,15 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         partySizeTxtView.inputAccessoryView = toolBar
         reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
         reserveBtn.titleLabel?.textColor = UIColor.black
-        reserveBtn.setTitleColor(UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0), for: .disabled)
+        reserveBtn.setTitle("CHOOSE DATE AND TIME", for: .disabled)
+
         reserveBtn.isEnabled = false
+        
         
         createCalDateArray()
         createTimeArr(todayChosen: false)
         
+        timeCollection.isUserInteractionEnabled = false
     }
     
 
@@ -160,7 +160,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
 //        let dateString = "Friday, September 8, 2017"
 //        let timeString = "10:00 AM"
 //        let reservation = Reservation(date: dateString, time: timeString, partySize: partySizeTxtView.text!)
-//        
+        
         print("Saving selectedDate = \(selectedDate) and selectedTime = \(selectedTime)")
         
         let reservation = Reservation(date: selectedDate, time: selectedTime, partySize: partySizeTxtView.text!)
@@ -182,7 +182,7 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             
         // if this indexPath exists in the dict -> return UICollectionViewCell() as! CalendarCell. else, dequeue it. 
             
-            var cell = collectionView.dequeueReusableCell(withReuseIdentifier: "callendarCell", for:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "callendarCell", for:
                 indexPath) as! CalendarCell
             cell.delegate = self
             let calDate = calendarDatesArray[indexPath.row]
@@ -242,10 +242,12 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         if cell.checkMarkImg.isHidden && !dayAlreadyClicked {
             cell.checkMarkImg.isHidden = false
             dayAlreadyClicked = true
+            timeCollection.isUserInteractionEnabled = true
             
             if timeAlreadyClicked {
                 reserveBtn.isEnabled = true
                 reserveBtn.backgroundColor = UIColor(red:0.36, green:0.69, blue:0.94, alpha:1.0)
+                reserveBtn.setTitle("RESERVE", for: .normal)
             }
             
             selectedCells[indexPathRow] = true
@@ -253,14 +255,19 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             selectedDate = cell.weekDayLbl.text! + " " + currentMonthLbl.text! + " " + cell.dayDateLbl.text!
             
         } else if !cell.checkMarkImg.isHidden {
+            
+            /*
+             - tap CalendarCell again
+                reloads timeCollection (to remove the check mark)
+                timeCollection.isUserInteractionEnabled = false
+                hides the 'reserve' button
+
+            */
             cell.checkMarkImg.isHidden = true
             dayAlreadyClicked = false
             
-            reserveBtn.isEnabled = false
-            reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
-            
             createTimeArr(todayChosen: false)
-           
+            
             selectedCells.removeValue(forKey: indexPathRow)
             
             timeAlreadyClicked = false
@@ -269,24 +276,35 @@ class ScheduleVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             selectedDate = ""
             
             timeCollection.reloadData()
+            
+            reserveBtn.isEnabled = false
+            reserveBtn.backgroundColor = UIColor(red:0.65, green:0.82, blue:0.95, alpha:1.0)
+            
+            timeCollection.isUserInteractionEnabled = false
         }
     }
 
     func timeCellTapped(cell: TimeCell) {
         
         if cell.checkImg.isHidden && !timeAlreadyClicked {
+            
+            /*
+             - tap TimeCell:
+                enable the 'reserve' btn
+                (should be able to untap or tap another TimeCell)
+            */
             cell.checkImg.isHidden = false
             timeAlreadyClicked = true
-            
-            if dayAlreadyClicked {
-                // here we activate the 'reserve' button. Here we need to save to 'reservation' array.
+        
+            reserveBtn.isEnabled = true
+            reserveBtn.backgroundColor = UIColor(red:0.36, green:0.69, blue:0.94, alpha:1.0)
+            reserveBtn.setTitle("RESERVE", for: .normal)
 
-                reserveBtn.isEnabled = true
-                reserveBtn.backgroundColor = UIColor(red:0.36, green:0.69, blue:0.94, alpha:1.0)
-            }
+            
             selectedTime = cell.timeLbl.text!
             
         } else if !cell.checkImg.isHidden {
+            
             cell.checkImg.isHidden = true
             timeAlreadyClicked = false
             

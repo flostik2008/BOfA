@@ -623,7 +623,7 @@
                                 <rect key="frame" x="0.0" y="601" width="375" height="66"/>
                                 <color key="backgroundColor" red="0.44523316271391744" green="0.59716619654841296" blue="1" alpha="0.83823844178082196" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="RESERVE">
+                                <state key="normal" title="CHOOSE DATE">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
